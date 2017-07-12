@@ -21,78 +21,77 @@ class GitApiResponse {
 
 }
 
-internal class Item {
+class Item {
 
     @SerializedName("id")
     @Expose
-    private val id: Int = 0
+     val id: Int = 0
     @SerializedName("name")
-    @Expose
-    private val name: String = ""
+    @Expose val name: String = ""
     @SerializedName("full_name")
     @Expose
-    private val fullName: String = ""
+     val fullName: String = ""
     @SerializedName("owner")
     @Expose
-    private val owner: Owner? = null
-    @SerializedName("private")
+     val owner: Owner? = null
+    @SerializedName("")
     @Expose
-    private val private: Boolean = false
+     val private: Boolean = false
     @SerializedName("html_url")
     @Expose
-    private val htmlUrl: String = ""
+     val htmlUrl: String = ""
     @SerializedName("description")
     @Expose
-    private val description: String = ""
+     val description: String = ""
     @SerializedName("fork")
     @Expose
-    private val fork: Boolean = false
+     val fork: Boolean = false
     @SerializedName("url")
     @Expose
-    private val url: String = ""
+     val url: String = ""
     @SerializedName("created_at")
     @Expose
-    private val createdAt: String = ""
+     val createdAt: String = ""
     @SerializedName("updated_at")
     @Expose
-    private val updatedAt: String = ""
+     val updatedAt: String = ""
     @SerializedName("pushed_at")
     @Expose
-    private val pushedAt: String = ""
+     val pushedAt: String = ""
     @SerializedName("homepage")
     @Expose
-    private val homepage: String = ""
+     val homepage: String = ""
     @SerializedName("size")
     @Expose
-    private val size: Int = 0
+     val size: Int = 0
     @SerializedName("stargazers_count")
     @Expose
-    private val stargazersCount: Int = 0
+     val stargazersCount: Int = 0
     @SerializedName("watchers_count")
     @Expose
-    private val watchersCount: Int = 0
+     val watchersCount: Int = 0
     @SerializedName("language")
     @Expose
-    private val language: String = ""
+     val language: String = ""
     @SerializedName("forks_count")
     @Expose
-    private val forksCount: Int = 0
+     val forksCount: Int = 0
     @SerializedName("open_issues_count")
     @Expose
-    private val openIssuesCount: Int = 0
+     val openIssuesCount: Int = 0
     @SerializedName("master_branch")
     @Expose
-    private val masterBranch: String = ""
+     val masterBranch: String = ""
     @SerializedName("default_branch")
     @Expose
-    private val defaultBranch: String = ""
+     val defaultBranch: String = ""
     @SerializedName("score")
     @Expose
-    private val score: Double = 0.0
+     val score: Double = 0.0
 
 }
 
-internal class Owner {
+class Owner {
 
     @SerializedName("login")
     @Expose
