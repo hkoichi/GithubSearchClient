@@ -6,8 +6,9 @@ import retrofit2.http.Query
 
 /**
  * Created by koichihasegawa on 2017/07/11.
+ * GitApiServiceを実行するためのクラス
  */
 interface GitApiService {
     @GET("/search/repositories")
-    fun search(@Query("q") q:String): Call<GitApiResponse>
+    fun search(@Query("q") q: String): Call<GitApiResponse>
 }

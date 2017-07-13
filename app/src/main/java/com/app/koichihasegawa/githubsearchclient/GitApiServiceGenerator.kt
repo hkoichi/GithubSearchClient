@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by koichihasegawa on 2017/07/11.
+ * GitApiServiceのインスタンス生成用のクラス
  */
 class GitApiServiceGenerator {
     companion object {

@@ -1,40 +1,30 @@
 package com.app.koichihasegawa.githubsearchclient
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.EditText
 import kotterknife.bindView
-import retrofit2.Call
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     val recyclerView: RecyclerView by bindView(R.id.recyclerView)
+    val editText: EditText by bindView(R.id.editText)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //アダプター、apiサービス、テキストチェンジリスナーの初期化
+        val adapter = MyListAdapter(this)
         val service = GitApiServiceGenerator.createService()
-        val call = service.search("kotlin")
-        call.enqueue(object : retrofit2.Callback<GitApiResponse> {
-            override fun onResponse(call: Call<GitApiResponse>?, response: Response<GitApiResponse>?) {
-                val data: List<Item>? = response?.body()?.items;
-                val adapter = data?.let {
-                    MyListAdapter(this@MainActivity,data){
-                        urlString ->
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlString))
-                        startActivity(intent)
-                    }
-                }
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-            }
+        //MyTextChangeListenerクラスではGitApiServiceの実行、adapterへのデータの追加を行う
+        val mTextChangeListener = MyTextChangeListener(this, service, adapter)
 
-            override fun onFailure(call: Call<GitApiResponse>?, t: Throwable?) {
-            }
-        })
+        //recyclerViewへの紐付け
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        //editTextへのテキストチェンジリスナーの紐付け
+        editText.addTextChangedListener(mTextChangeListener)
     }
 }
