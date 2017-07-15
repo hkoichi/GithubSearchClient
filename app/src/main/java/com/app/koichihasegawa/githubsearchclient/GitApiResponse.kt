@@ -1,5 +1,7 @@
 package com.app.koichihasegawa.githubsearchclient
 
+
+
 /**
  * Created by koichihasegawa on 2017/07/11.
  * GitApiServiceから受け取ったJSONの変換後のクラス
@@ -46,3 +48,4 @@ class Owner {
     private val receivedEventsUrl: String = ""
     private val type: String = ""
 }
+

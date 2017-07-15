@@ -11,20 +11,20 @@ import retrofit2.Response
 /**
  * Created by koichihasegawa on 2017/07/13.
  */
-class MyTextChangeListener(val context: Context, val service: GitApiService, val adapter: MyListAdapter) : TextWatcher {
+class MyTextChangeListener(val context: Context, val service: GitApiService, val adapter: MyListAdapter,val accessToken: String) : TextWatcher {
     var call: Call<GitApiResponse>? = null
 
     override fun afterTextChanged(p0: Editable?) {
         //以前の検索を強制終了
         call?.cancel()
-        call = service.search(p0.toString())
+        call = service.search(p0.toString(),accessToken)
         call?.enqueue(object : Callback<GitApiResponse> {
             override fun onResponse(call: Call<GitApiResponse>?, response: Response<GitApiResponse>?) {
                 adapter.dataUpdate(response?.body()?.items)
             }
 
             override fun onFailure(call: Call<GitApiResponse>?, t: Throwable?) {
-                Toast.makeText(context, "api search result", Toast.LENGTH_LONG)
+                Toast.makeText(context, "api search failed", Toast.LENGTH_LONG)
             }
 
         })
