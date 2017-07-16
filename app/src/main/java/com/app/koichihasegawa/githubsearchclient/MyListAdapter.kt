@@ -23,7 +23,7 @@ class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.M
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.list_sub, parent, false), context)
+        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.card_sub, parent, false), context)
     }
 
     override fun getItemCount(): Int {
@@ -42,16 +42,16 @@ class MyListAdapter(val context: Context) : RecyclerView.Adapter<MyListAdapter.M
     class MyViewHolder(itemView: View?, val context: Context) : RecyclerView.ViewHolder(itemView) {
         val title: TextView by bindView(R.id.title)
         val desctiprion: TextView by bindView(R.id.description)
-        val stars: TextView by bindView(R.id.stars)
         val language: TextView by bindView(R.id.language)
+        val repo: TextView by bindView(R.id.repo)
 
         fun setUp(item: Item?) {
             this.title.text = item?.name
             this.desctiprion.text = item?.description
             this.language.text = item?.language
-            this.stars.text = item?.score.toString()
+            this.repo.text = item?.url?.replace("https://api.github.com/repos/","")
             this.itemView.setOnClickListener {
-                val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(item?.htmlUrl))
+                val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(item?.url?.replace("api.","")?.replace("repos/","")))
                 startActivity(context, intent, null)
             }
         }

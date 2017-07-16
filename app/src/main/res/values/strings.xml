@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GitHubSearchClient</string>
+    <string name="sortSelect">sort by:</string>
+    <string name="inputKeywords">input search keywords</string>
 </resources>

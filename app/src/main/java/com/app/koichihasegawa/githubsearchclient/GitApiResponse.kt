@@ -1,10 +1,9 @@
 package com.app.koichihasegawa.githubsearchclient
 
 
-
 /**
  * Created by koichihasegawa on 2017/07/11.
- * GitApiServiceから受け取ったJSONの変換後のクラス
+ * GitServiceから受け取ったJSONの変換後のクラス
  */
 
 class GitApiResponse {
@@ -36,7 +35,6 @@ class Item {
     val masterBranch: String = ""
     val defaultBranch: String = ""
     val score: Double = 0.0
-
 }
 
 class Owner {

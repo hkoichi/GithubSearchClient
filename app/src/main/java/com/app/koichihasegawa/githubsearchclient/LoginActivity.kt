@@ -10,8 +10,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
-
 class LoginActivity : AppCompatActivity() {
     private val clientId = "b96ff3bd9171ec4d2a54"
     private val clientSecret = "0114e47009e740d3600388bcab2b4ed2e5c2426b"
@@ -21,34 +19,42 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //oauthServiceの初期化
+        GitApiServiceGenerator.oauthService = GitApiServiceGenerator.createOauthService(clientId, clientSecret)
+        //アクセスコードの取得のためのintent
         val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(GitApiServiceGenerator.OAUTH_BASE_URL + "/login/oauth/authorize" + "?client_id=" + clientId + "&redirect_uri=" + redirectUri))
+                Uri.parse(GitApiServiceGenerator.OAUTH_BASE_URL + "/login/oauth/authorize" + "?client_id=" + clientId + "&redirect_uri=" + redirectUri + "&scope=public_repo"))
         startActivity(intent)
+
     }
 
     override fun onResume() {
         super.onResume()
+        //アクセスコードを取得し、アクセストークンを取得
         val uri = intent.data
-        if (uri != null) {
+        if (uri != null && uri.toString().startsWith(redirectUri)) {
             val code = uri.getQueryParameter("code")
             if (code != null) {
-                val service = GitApiServiceGenerator.createOauthService(clientId, clientSecret)
-                val call = service.getAccessToken(code)
-                call.enqueue(object : Callback<AccessToken> {
+                val call = GitApiServiceGenerator.oauthService?.getAccessToken(code)
+                call?.enqueue(object : Callback<AccessToken> {
                     override fun onFailure(call: Call<AccessToken>?, t: Throwable?) {
-                        Toast.makeText(this@LoginActivity, "failure", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "authentication failure", Toast.LENGTH_LONG).show()
                     }
                     override fun onResponse(call: Call<AccessToken>?, response: Response<AccessToken>?) {
-                        val accessToken = response?.body()
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("accessToken",accessToken?.access_token)
-                        startActivity(intent)
+                        if (response?.body()?.access_token == null) {
+                            return
+                        } else {
+                            Toast.makeText(this@LoginActivity, "authentication success", Toast.LENGTH_SHORT).show()
+                            //accessTokenの設定
+                            GitApiServiceGenerator.accessToken = response?.body()?.access_token
+                        }
                     }
                 })
-            } else if (uri.getQueryParameter("error") != null) {
+                //MainAcitivityへのintent
+                var intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
             }
         }
     }
-
 }

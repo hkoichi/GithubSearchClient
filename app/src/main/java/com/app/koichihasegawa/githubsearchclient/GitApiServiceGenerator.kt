@@ -18,6 +18,13 @@ class GitApiServiceGenerator {
         private val API_BASE_URL = "https://api.github.com/"
         val OAUTH_BASE_URL = "https://github.com/"
 
+
+        //githubのAPIとoauth認証はurlが異なるためそれぞれserviceGeneratorを設定する
+        var oauthService: GitOauthService? = null
+        var searchService: GitApiService? = null
+
+        var accessToken: String? = null
+
         private var clientId: String? = null
         private var clientSecret: String? = null
 
